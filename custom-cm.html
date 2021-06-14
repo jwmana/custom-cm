@@ -29,8 +29,8 @@
             const scope = document.querySelector("body");
 
             scope.addEventListener("contextmenu", (e) => {
-            event.preventDefault();
-            const { offsetX: mouseX, offsetY: mouseY } = event;
+            e.preventDefault();
+            const { offsetX: mouseX, offsetY: mouseY } = e;
 
             const { normalizedX, normalizedY } = normalizePozition(mouseX, mouseY);
 
