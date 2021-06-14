@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" />
+        <title>custom context menue</title>
+        <style>
+            * {margin: 0;padding: 0;box-sizing: border-box;}
+            html, body {width: 100%;height: 100%;}
+            #cm {width: 200px;height: 250px;background-color: #f7ecec; border: 1px solid #000;font-size: medium;display: none;position:absolute;top: 0;left: 0;}
+            ul {width: 100%;height:100%;display: flex;flex-flow: column nowrap;justify-content: space-between;align-content: center;}
+            li {list-style-type: none; padding: 5px;cursor: pointer;width: 100%;font-size: 2rem;transition: 0.4s all ease-in-out;}
+            li:hover {background-color: #e4dede;color: purple;}
+        </style>
+    </head>
+    <body>
+        <div id="cm">
+            <ul>
+                <li>Home</li>
+                <li>About</li>
+                <li>Contact us</li>
+                <li>Options</li>
+            </ul>
+        </div>
+        <script>
+            let cm = document.querySelector("#cm")
+            const scope = document.querySelector("body");
+
+            scope.addEventListener("contextmenu", (e) => {
+            event.preventDefault();
+            const { clientX: mouseX, clientY: mouseY } = e;
+            cm.style.top = `${mouseY}px`;
+            cm.style.left = `${mouseX}px`;
+
+            cm.style.display ="block"
+});
+        </script>
