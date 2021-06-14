@@ -30,10 +30,54 @@
 
             scope.addEventListener("contextmenu", (e) => {
             event.preventDefault();
-            const { clientX: mouseX, clientY: mouseY } = e;
-            cm.style.top = `${mouseY}px`;
-            cm.style.left = `${mouseX}px`;
+            const { offsetX: mouseX, offsetY: mouseY } = event;
+
+            const { normalizedX, normalizedY } = normalizePozition(mouseX, mouseY);
+
+            cm.style.top = `${normalizedY}px`
+            cm.style.left = `${normalizedX}px`
 
             cm.style.display ="block"
-});
+        })
+        // close the context menue when click outside it
+                scope.addEventListener("click", (e) => {
+                if (e.target.offsetParent != cm) {
+                    cm.style.display ="none"
+            }
+        })
+        const normalizePozition = (mouseX, mouseY) => {
+  // ? compute what is the mouse position relative to the container element (scope)
+        const {
+            left: scopeOffsetX,
+            top: scopeOffsetY,
+        } = scope.getBoundingClientRect()
+
+        const scopeX = mouseX - scopeOffsetX
+        const scopeY = mouseY - scopeOffsetY
+
+        // ? check if the element will go out of bounds
+        const outOfBoundsOnX =
+            scopeX + cm.clientWidth > scope.clientWidth
+
+        const outOfBoundsOnY =
+            scopeY + cm.clientHeight > scope.clientHeight
+
+        let normalizedX = mouseX
+        let normalizedY = mouseY
+
+        // ? normalzie on X
+        if (outOfBoundsOnX) {
+            normalizedX =
+            scopeOffsetX + scope.clientWidth - cm.clientWidth
+        }
+
+        // ? normalize on Y
+        if (outOfBoundsOnY) {
+            normalizedY =
+            scopeOffsetY + scope.clientHeight - cm.clientHeight
+        }
+
+        return { normalizedX, normalizedY }
+        }
+
         </script>
